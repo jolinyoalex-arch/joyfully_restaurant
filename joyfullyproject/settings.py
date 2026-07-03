@@ -130,15 +130,13 @@ import os
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Email Configuration kwa Admin Notifications
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # Console output kwa development
-# Kwa production, tumia:
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = 'smtp.gmail.com'  # Au server yako
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
-# EMAIL_HOST_USER = 'your-email@gmail.com'
-# EMAIL_HOST_PASSWORD = 'your-app-password'
+EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND', 'django.core.mail.backends.console.EmailBackend')
+EMAIL_HOST = os.environ.get('EMAIL_HOST', 'smtp.gmail.com')
+EMAIL_PORT = int(os.environ.get('EMAIL_PORT', 587))
+EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS', 'True') == 'True'
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', '')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
 
-DEFAULT_FROM_EMAIL = 'noreply@joyfullyrestaurant.com'
-ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL', 'admin@joyfullyrestaurant.com')  # Weka variable ya Render
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'noreply@joyfullyrestaurant.com')
+ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL', 'admin@joyfullyrestaurant.com')
 
