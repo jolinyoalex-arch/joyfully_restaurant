@@ -41,3 +41,25 @@ class Reservation(models.Model):
 
     def __str__(self):
         return f"{self.jina} - Watu {self.idadi_ya_watu}"
+
+
+# 4. Model ya Order (Kuagiza vyakula)
+class Order(models.Model):
+    STATUS_CHOICES = [
+        ('pending', 'Inasubiri'),
+        ('confirmed', 'Imethibitishwa'),
+        ('completed', 'Imekamilika'),
+        ('cancelled', 'Imeghairiwa'),
+    ]
+    
+    jina = models.CharField(max_length=100)
+    simu = models.CharField(max_length=15)
+    email = models.EmailField(blank=True, null=True)
+    items_json = models.JSONField(help_text="Vitu vilivyoagizwa")
+    jumla = models.DecimalField(max_digits=10, decimal_places=2)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+    tarehe_ya_kuagiza = models.DateTimeField(auto_now_add=True)
+    notes = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return f"Order #{self.id} - {self.jina}"

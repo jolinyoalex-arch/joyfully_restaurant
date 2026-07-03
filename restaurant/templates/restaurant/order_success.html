@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <title>Oda Imekubali - Joyfully Restaurant</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<div class="container mt-5">
+    <div class="text-center mb-5">
+        <h2 class="text-success">✓ Oda Imekubali!</h2>
+        <p class="text-muted">Asante kwa kuagiza kwenye Joyfully Restaurant</p>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card p-4 shadow-sm">
+                <h4 class="mb-3">Taarifa za Oda</h4>
+                <div class="mb-3">
+                    <p><strong>Namba ya Oda:</strong> #{{ order.id }}</p>
+                    <p><strong>Jina:</strong> {{ order.jina }}</p>
+                    <p><strong>Simu:</strong> {{ order.simu }}</p>
+                    {% if order.email %}
+                    <p><strong>Email:</strong> {{ order.email }}</p>
+                    {% endif %}
+                    <p><strong>Tarehe ya Kuagiza:</strong> {{ order.tarehe_ya_kuagiza|date:"d M Y H:i" }}</p>
+                    <p><strong>Status:</strong> <span class="badge bg-warning">{{ order.get_status_display }}</span></p>
+                </div>
+
+                <h5 class="mb-3 mt-4">Vitu Vilivyoagizwa</h5>
+                <table class="table table-sm">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Chakula</th>
+                            <th class="text-end">Idadi</th>
+                            <th class="text-end">Bei</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in order.items_json %}
+                        <tr>
+                            <td>{{ item.name }}</td>
+                            <td class="text-end">{{ item.quantity }}</td>
+                            <td class="text-end">{{ item.total }} TZS</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <div class="border-top pt-3 mt-3">
+                    <h5 class="text-end text-success">Jumla: {{ order.jumla }} TZS</h5>
+                </div>
+
+                {% if order.notes %}
+                <div class="alert alert-info mt-3">
+                    <strong>Ujumbe maalum:</strong> {{ order.notes }}
+                </div>
+                {% endif %}
+
+                <div class="mt-4">
+                    <p class="text-muted small">
+                        Taarifa za oda zimekutumwa kwa admin. Tutakuwasiliana naye haraka.
+                    </p>
+                </div>
+
+                <a href="{% url 'menu' %}" class="btn btn-primary w-100 mt-3">Rudi Kwenye Menu</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
