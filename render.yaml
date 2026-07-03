@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: joyfully-restaurant
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn joyfullyproject.wsgi:application
+    envVars:
+      - key: DEBUG
+        value: false
+      - key: PYTHON_VERSION
+        value: 3.13.0
+    preDeployCommand: python manage.py migrate

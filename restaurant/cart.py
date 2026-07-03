@@ -3,7 +3,7 @@ from django.conf import settings
 from .models import MenuItem
 
 class Cart:
-    def _init_(self, request):
+    def __init__(self, request):
         self.session = request.session
         cart = self.session.get(settings.CART_SESSION_ID)
         if not cart:
@@ -13,7 +13,7 @@ class Cart:
     def add(self, chakula, quantity=1, override_quantity=False):
         chakula_id = str(chakula.id)
         if chakula_id not in self.cart:
-            self.cart[chakula_id] = {'quantity': 0, 'price': str(chakula.bei)}
+            self.cart[chakula_id] = {'quantity': 0, 'price': str(chakula.price)}
         
         if override_quantity:
             self.cart[chakula_id]['quantity'] = quantity
@@ -30,7 +30,7 @@ class Cart:
             del self.cart[chakula_id]
             self.save()
 
-    def _iter_(self):
+    def __iter__(self):
         chakula_ids = self.cart.keys()
         vyakula = MenuItem.objects.filter(id__in=chakula_ids)
         cart = self.cart.copy()
@@ -41,7 +41,7 @@ class Cart:
             item['total_price'] = item['price'] * item['quantity']
             yield item
 
-    def _len_(self):
+    def __len__(self):
         return sum(item['quantity'] for item in self.cart.values())
 
     def get_total_price(self):
