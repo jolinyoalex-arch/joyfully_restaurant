@@ -6,7 +6,7 @@ class RestaurantTable(models.Model):
     capacity = models.IntegerField(default=4)
     is_available = models.BooleanField(default=True)
 
-    def _str_(self):
+    def __str__(self):
         return f"Meza Namba {self.table_number}"
 
 
@@ -25,7 +25,7 @@ class MenuItem(models.Model):
     # ONGEZA HUU MSTARI HAPA CHINI KWA AJILI YA PICHA (Hatua ya 3)
     image = models.ImageField(upload_to='vyakula/', blank=True, null=True)
 
-    def _str_(self):
+    def __str__(self):
         return self.name
 
 
@@ -37,7 +37,7 @@ class Reservation(models.Model):
     tarehe_na_muda = models.DateTimeField()
     ujumbe = models.TextField(blank=True, null=True)
     tarehe_ya_kuomba = models.DateTimeField(auto_now_add=True)
-
-    def _str_(self):
-        return f"{self.jina} - Watu {self.idadi_ya_watu}"
     is_available = models.BooleanField(default=True)
+
+    def __str__(self):
+        return f"{self.jina} - Watu {self.idadi_ya_watu}"
