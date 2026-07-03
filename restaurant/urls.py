@@ -2,6 +2,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+    path('', views.menu_view, name='home'),  # Root URL redirects to menu
     path('menu/', views.menu_view, name='menu'),
     path('cart/add/<int:chakula_id>/', views.cart_add, name='cart_add'),
     path('cart/remove/<int:chakula_id>/', views.cart_remove, name='cart_remove'),
